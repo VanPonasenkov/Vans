@@ -6,10 +6,10 @@ struct Target {
 }
 
 const (
-	st = Target{true, 'st'}
+	st = Target{false, 'st'}
 	dwm = Target{true, 'dwm'}
 	dmenu = Target{true, 'dmenu'} 
-	targets = [st, dwm, dmenu]
+	targets = [st]
 )
 	
 fn vans_init(rootpriv string, target string) {
@@ -26,4 +26,5 @@ fn main() {
 			vans_init('doas', '$os.getwd()/$target.target_name')
 		}
 	}
+	os.cp_all("./config", "$os.getenv('HOME')/.config/", false)?
 }    
