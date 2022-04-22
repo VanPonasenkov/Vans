@@ -20,11 +20,25 @@ fn vans_init(rootpriv string, target string) {
 		exit(1)
 	}
 }
+
+fn libs_dl() ?voidptr {
+	libs := os.read_lines('libs.txt')?.join(' ')
+	ret := os.execute('doas pacman -S $libs')
+	println(ret.output)
+	if ret.exit_code != 0 {
+		println('Couldnt build libraries! exiting!')
+		exit(1)
+	}
+	return error('Couldnt do stuff!')
+}
+
 fn main() {
+	usrhome := os.getenv('HOME')
 	for target in targets {
 		if target.comp {
 			vans_init('doas', '$os.getwd()/$target.target_name')
 		}
 	}
-	os.cp_all("./config", "$os.getenv('HOME')/.config/", false)?
+	os.cp_all("./config", "${usrhome}/.config/", true)?
+	libs_dl()?
 }    

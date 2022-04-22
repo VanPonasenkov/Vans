@@ -1,0 +1,8 @@
+xorg-xinit
+xorg-server
+xorg-xrdb
+ttf-inconsolata
+ttf-ubuntu-font-family
+scrot
+feh
+adobe-source-code-pro-fonts
