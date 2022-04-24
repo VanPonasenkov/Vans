@@ -19,6 +19,7 @@ if [[ "$usrchoice" = "y" || "$usrchoice" = "yes" ]]; then
     echo "Enter the username: "
     read username
     useradd -mg wheel $username
+    passwd $username
 fi
 
 # Doas Configuration Section
@@ -30,3 +31,5 @@ mv "$pfld/dwm" "/home/$username/sources"
 mv "$pfld/dmenu" "/home/$username/sources"
 mv "$pfld/st" "/home/$username/sources"
 mv "$pfld/.config" "/home/$username"
+mv "$pfld/.xinitrc" "/home/$username"
+mv "$pfld/dwmstatus" "/home/$username/sources"
