@@ -6,3 +6,4 @@ ttf-ubuntu-font-family
 scrot
 feh
 adobe-source-code-pro-fonts
+opendoas
