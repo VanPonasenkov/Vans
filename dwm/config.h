@@ -14,16 +14,24 @@ static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "Ubuntu Mono:pixelsize=18:antialias=true:autohint=true", "Symbols Nerd Font:pixelsize=20:antialias=true:autohint=true", "Noto Color Emoji:pixelsize=18:antialias=true:autohint=true", "Source Code Pro:pixelsize=18:antialias=true:autohint=true"};
 static char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]       = "#222222";
-static char selbgcolor[] = "#00b4ab";
+static char selbgcolor[] = "#555555";
 static char normfgcolor[] = "#ffffff";
 static char selfgcolor[] = "#ffffff";
 static char normbordercolor[] = "#9d2933";
 static char selbordercolor[] = "#f47983";
+static const unsigned int baralpha = 125; // 0xd0
+static const unsigned int borderalpha = OPAQUE;
 
 static char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
 	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
+};
+
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -69,7 +77,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL};
 static const char *termcmd[]  = { "st", NULL };
-static const char *scrotcmd[] = { "scrot", "~/Screenshots/", NULL };
+static const char *scrotcmd[] = { "scrot", "/home/ernest/Screenshots/%T-scrot.png", NULL };
+static const char *xkillcmd[] = { "pkill", "X", NULL };
 ResourcePref resources[] = {
 		{ "normbgcolor",        STRING,  &normbgcolor },
 		{ "normbordercolor",    STRING,  &normbordercolor },
@@ -84,6 +93,8 @@ ResourcePref resources[] = {
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
 		{ "mfact",      	 	FLOAT,   &mfact },
+        { "baralpha",           INTEGER, &baralpha },
+        { "borderalpha",        INTEGER, &borderalpha },
 };
 
 static Key keys[] = {
@@ -138,7 +149,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = xkillcmd } },
 };
 
 /* button definitions */

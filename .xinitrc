@@ -1,5 +1,8 @@
-sh ~/.fehbg &
-xcompmgr &
-dwmstatus 2>&1 >/dev/null &
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources &
-exec dwm
+sh ~/.fehbg &
+exec xcompmgr &
+exec setxkbmap -layout us,ru -variant altgr-intl, -option grp:lwin_toggle &
+exec dunst &
+exec dwm &
+exec wal -n -R &
+exec dwmblocks

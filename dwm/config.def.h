@@ -19,11 +19,19 @@ static char normfgcolor[] = "#ffffff";
 static char selfgcolor[] = "#ffffff";
 static char normbordercolor[] = "#9d2933";
 static char selbordercolor[] = "#f47983";
+static unsigned int baralpha = 0xd0;
+static unsigned int borderalpha = OPAQUE;
 
 static char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
 	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor  },
+};
+
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -69,7 +77,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL};
 static const char *termcmd[]  = { "st", NULL };
-static const char *scrotcmd[] = { "scrot", "~/Screenshots/", NULL };
+static const char *scrotcmd[] = { "scrot", "/home/ernest/Screenshots/%T-scrot.png", NULL };
+static const char *xkillcmd[] = { "pkill", "X", NULL };
 ResourcePref resources[] = {
 		{ "normbgcolor",        STRING,  &normbgcolor },
 		{ "normbordercolor",    STRING,  &normbordercolor },
@@ -138,7 +147,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = xkillcmd } },
 };
 
 /* button definitions */
